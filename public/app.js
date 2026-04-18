@@ -14,6 +14,46 @@ let appState = {
   stockModalData: null,  // { prod, addFrom }
 };
 
+// ── Pull to Refresh Page (with indicator) ────────────────────────────
+const indicator = document.createElement('div');
+indicator.className = 'pull-indicator';
+indicator.textContent = '↓ Release to refresh';
+document.body.appendChild(indicator);
+
+let touchStartY = 0;
+let isPulling = false;
+const THRESHOLD = 80;
+
+document.addEventListener('touchstart', (e) => {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchmove', (e) => {
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  if (scrollTop > 0) return;
+
+  const pullDistance = e.touches[0].clientY - touchStartY;
+
+  if (pullDistance > 40) {
+    indicator.classList.add('visible');
+    indicator.textContent = pullDistance >= THRESHOLD ? '↑ Release to refresh' : '↓ Pull to refresh';
+    isPulling = pullDistance >= THRESHOLD;
+  }
+}, { passive: true });
+
+document.addEventListener('touchend', () => {
+  indicator.classList.remove('visible');
+
+  if (isPulling) {
+    isPulling = false;
+    indicator.textContent = 'Refreshing…';
+    indicator.classList.add('visible');
+    setTimeout(() => window.location.reload(), 300);
+  }
+
+  touchStartY = 0;
+});
+
 // ─────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────
@@ -24,7 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function bindGlobalListeners() {
   // New category button
-  document.getElementById('btnNewCat').addEventListener('click', () => openModal('modalNewCat'));
+  document.getElementById('btnNewCat').addEventListener('click', () => { 
+    openModal('modalNewCat') 
+
+    const mainToggleBtnDiv = document.querySelector('.main-toggle-btn-div');
+    const mainToggleBtn = document.getElementById('mainToggleBtn');
+    const overlay = document.getElementById('overlay');
+    const leftNav = document.getElementById('leftNavBar');
+
+    mainToggleBtn.style.display = 'block'
+    mainToggleBtnDiv.style.display = 'block'
+    overlay.classList.remove('active');
+    leftNav.classList.remove('open');
+  });
 
   // Create category confirm
   document.getElementById('btnCreateCat').addEventListener('click', createCategory);
@@ -188,11 +240,19 @@ function renderCategoryList(cats) {
       // Add active to new item
       item.classList.add('active');
     });
+
     item.querySelector('.cat-item-del').addEventListener('click', e => {
       e.stopPropagation();
 
-      const leftNav = document.getElementById('leftNavBar');
-      leftNav.classList.remove('open');
+        const mainToggleBtnDiv = document.querySelector('.main-toggle-btn-div');
+        const mainToggleBtn = document.getElementById('mainToggleBtn');
+        const overlay = document.getElementById('overlay');
+        const leftNav = document.getElementById('leftNavBar');
+
+        mainToggleBtn.style.display = 'block'
+        mainToggleBtnDiv.style.display = 'block'
+        overlay.classList.remove('active');
+        leftNav.classList.remove('open');
 
       confirmDelete(cat.id, cat.name);
     });

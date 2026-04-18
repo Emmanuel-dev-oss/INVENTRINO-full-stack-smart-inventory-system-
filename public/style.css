@@ -78,6 +78,26 @@ img, table {
   opacity: 1;
 }
 
+.pull-indicator {
+  position: fixed;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--body-bg);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: top 0.2s ease;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.pull-indicator.visible {
+  top: 12px;
+}
+
 /* Left Navigation */
 .left-navbar {
   width: 19rem;
@@ -624,6 +644,10 @@ img, table {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+}
+
+.status-container {
+  padding-bottom: 5rem;
 }
 
 .table-wrapper {
