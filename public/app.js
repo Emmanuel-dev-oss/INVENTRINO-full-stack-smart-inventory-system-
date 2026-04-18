@@ -17,26 +17,36 @@ let appState = {
 // ── Pull to Refresh Page (with indicator) ────────────────────────────
 const indicator = document.createElement('div');
 indicator.className = 'pull-indicator';
-indicator.textContent = '↓ Release to refresh';
+indicator.textContent = '↓ Pull to refresh';
 document.body.appendChild(indicator);
 
 let touchStartY = 0;
-let touchStartScrollTop = 0;
 let isPulling = false;
+let isEligible = false;
 const THRESHOLD = 80;
 
 document.addEventListener('touchstart', (e) => {
-  touchStartScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+  // Only mark this gesture as eligible if the page is truly at rest at the top
+  isEligible = scrollTop === 0;
   touchStartY = e.touches[0].clientY;
 }, { passive: true });
 
 document.addEventListener('touchmove', (e) => {
-  // Only activate if the page was already at the very top when the finger landed
-  if (touchStartScrollTop > 0) return;
+  if (!isEligible) return;
+
+  // If at any point during the pull the page has scrollTop > 0, cancel it
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  if (scrollTop > 0) {
+    isEligible = false;
+    isPulling = false;
+    indicator.classList.remove('visible');
+    return;
+  }
 
   const pullDistance = e.touches[0].clientY - touchStartY;
 
-  // Ignore upward swipes
   if (pullDistance <= 0) return;
 
   if (pullDistance > 40) {
@@ -57,7 +67,8 @@ document.addEventListener('touchend', () => {
   }
 
   touchStartY = 0;
-  touchStartScrollTop = 0;
+  isEligible = false;
+  isPulling = false;
 });
 
 // ─────────────────────────────────────────────
