@@ -775,7 +775,7 @@ td.num { font-family: 'Geist Mono', monospace; font-size: 12px; }
 .page-info { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--text3); min-width: 90px; text-align: center; }
 
 /* STATUS TABLE */
-.status-section { margin-top: 4px; }
+.status-section { margin-top: 4px; margin-bottom: 1rem;}
 .status-table tr:hover { background: var(--surface2); }
 
 .status-badge {
