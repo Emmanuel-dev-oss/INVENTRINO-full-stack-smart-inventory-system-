@@ -42,15 +42,40 @@ html { font-size: 14px; }
 body {
   font-family: 'Geist', 'Helvetica Neue', sans-serif;
   background: var(--body-bg);
-  display: flex;
   height: 100vh;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
+.container {
+  display: flex;
+  height: 100vh;
+}
+
 h1 {
   text-align: center;
   color: #333;
+}
+
+img, table {
+  max-width: 100%;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: none;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+  display: block;
+  opacity: 1;
 }
 
 /* Left Navigation */
@@ -1203,6 +1228,22 @@ td.num { font-family: 'Geist Mono', monospace; font-size: 12px; }
 .btn-sell-confirm { background: var(--green); color: white; }
 .btn-sell-confirm:hover { background: #1f6640; }
 
+@media (max-width: 900px) {
+  .search-box input {
+    width: 140px;
+  }
+
+  .cat-heading-wrap { 
+    flex-wrap: wrap; 
+    gap: 5px; 
+  }
+
+  .cat-topbar {
+    padding: 13px 23px;
+    gap: 16px;
+  }
+}
+
 @media (max-width: 700px) {
   .toggle-btn {display: block;}
   .left-navbar {
@@ -1220,16 +1261,28 @@ td.num { font-family: 'Geist Mono', monospace; font-size: 12px; }
     transform: translateX(0);
   }
 
-  /* .main-toggle-btn {
-    display: block;
-  } */
-
   .main-toggle-btn-div {
     display: block;
   }
 
   .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
   .history-stats { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 550px) {
+  .cat-topbar-right {
+    flex-direction: column;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .btn-add-product {
+    width: 11rem;
+  }
+
+  .search-box input {
+    width: 154px;
+  }
 }
 
 
@@ -1372,9 +1425,4 @@ input {
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #ddd;
-}
-
-.low {
-  color: red;
-  font-weight: bold;
 }

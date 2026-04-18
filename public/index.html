@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+<div class="container">
   <aside class="left-navbar" id="leftNavBar">
     <div class="sidebar-brand">
       <div class="header">
@@ -39,6 +39,8 @@
       <div class="sf-text">All right reserved</div>
     </div>
   </aside>
+
+  <div id="overlay" class="overlay"></div>
 
   <main class="main-content" id="mainContent">
     <!-- Welcome state -->
@@ -78,7 +80,7 @@
             <svg class="search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 10l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             <input type="text" id="searchInput" placeholder="Search products…" autocomplete="off" />
           </div>
-          <button class="btn btn-accent" id="btnAddProduct">
+          <button class="btn btn-accent btn-add-product" id="btnAddProduct">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             Add Product
           </button>
@@ -113,7 +115,7 @@
               <table class="product-table" id="productTable">
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th>SN</th>
                     <th>Type</th>
                     <th>Product Name</th>
                     <th>Unit / Base</th>
@@ -159,20 +161,22 @@
             <span class="eyebrow-label">STOCK STATUS & ALERTS</span>
           </div>
           <div class="table-container">
-            <table class="product-table status-table">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Stock Remaining</th>
-                  <th>Total Sold</th>
-                  <th>Revenue</th>
-                  <th>Total Gain/Loss</th>
-                </tr>
-              </thead>
-              <tbody id="statusTbody"></tbody>
-            </table>
+            <div class="table-wrapper">
+              <table class="product-table status-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Stock Remaining</th>
+                    <th>Total Sold</th>
+                    <th>Revenue</th>
+                    <th>Total Gain/Loss</th>
+                  </tr>
+                </thead>
+                <tbody id="statusTbody"></tbody>
+              </table>
+            </div>
           </div>
         </section>
       </section>
@@ -467,6 +471,8 @@
 
   <!-- Toast -->
   <div id="toast" class="toast hidden"></div>
+</div>
+
 
   <script src="script.js"></script>
   <script src="app.js"></script>

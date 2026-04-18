@@ -3,16 +3,11 @@ const mainToggleBtn = document.getElementById('mainToggleBtn');
 const sidebar = document.getElementById('leftNavBar');
 const toggleBtn = document.getElementById('toggleBtn');
 const mainToggleBtnDiv = document.querySelector('.main-toggle-btn-div');
-const catItem = document.querySelectorAll('cat-item');
-
-// closeToggleBtn.addEventListener('click', () => {
-//   sidebar.classList.add('active');
-//   toggleBtn.style.display = 'block'
-// });
-
+const overlay = document.getElementById('overlay');
 
 function toggleSmallScreenBtn() {
   sidebar.classList.add('open');
+  overlay.classList.add('active')
 }
 
 function toggleBigScreenBtn() {
@@ -28,6 +23,7 @@ function openBigScreenNav () {
 function openSmallScreenNav () {
   sidebar.classList.add('open');
   mainToggleBtn.style.display = 'none'
+  overlay.classList.add('active')
 }
 
 function closeBigScreenNav() {
@@ -41,6 +37,7 @@ function closeSmallScreenNav() {
   sidebar.classList.remove('open');
   mainToggleBtn.style.display = 'block'
   mainToggleBtnDiv.style.display = 'block'
+  overlay.classList.remove('active')
 }
 
 const mediaQuery = window.matchMedia('(max-width: 700px)');
@@ -71,3 +68,13 @@ handleScreenChange(mediaQuery);
 
 // Listen for screen resize changes
 mediaQuery.addEventListener('change', handleScreenChange);
+
+// Close navbar when clicking outside
+overlay.addEventListener('click', (e) => {
+  if(e.target === overlay) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    mainToggleBtn.style.display = 'block'
+    mainToggleBtnDiv.style.display = 'block'
+  }
+});

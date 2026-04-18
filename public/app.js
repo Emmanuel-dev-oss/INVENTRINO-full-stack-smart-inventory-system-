@@ -144,7 +144,7 @@ async function loadCategories() {
 }
 
 function renderCategoryList(cats) {
-  const list = document.getElementById('catList')
+  const list = document.getElementById('catList');
 
   list.innerHTML = ''
 
@@ -165,9 +165,21 @@ function renderCategoryList(cats) {
       </div>
       <button class="cat-item-del" data-del-cat="${cat.id}" title="Delete">×</button>
     `;
+
+    const leftNav = document.getElementById('leftNavBar');
+
     item.addEventListener('click', e => {
       if (e.target.dataset.delCat) return;
       selectCategory(cat.id, cat.heading || cat.name);
+
+      const clickedItem = e.target.closest('.cat-item');
+
+      if (clickedItem) {
+        leftNav.classList.remove('open');
+      }
+
+      const overlay = document.getElementById('overlay');
+      overlay.classList.remove('active');
 
       // Remove active from all
       const sidebar = document.querySelectorAll('.cat-item')
@@ -178,6 +190,10 @@ function renderCategoryList(cats) {
     });
     item.querySelector('.cat-item-del').addEventListener('click', e => {
       e.stopPropagation();
+
+      const leftNav = document.getElementById('leftNavBar');
+      leftNav.classList.remove('open');
+
       confirmDelete(cat.id, cat.name);
     });
 
@@ -342,7 +358,7 @@ function buildSingleRow(p, idx) {
   const gainCls = gain > 0 ? 'profit-pos' : gain < 0 ? 'profit-neg' : 'profit-zero';
 
   tr.innerHTML = `
-    <td><span class="id-pill">#${idx}</span></td>
+    <td><span class="id-pill">${idx}</span></td>
     <td><span class="type-badge type-single">Single</span></td>
     <td class="prod-name">${escHtml(p.productName)}</td>
     <td class="text-muted text-sm">—</td>
@@ -381,7 +397,7 @@ function buildMultiUnitRow(p, idx) {
   const gainCls = gain > 0 ? 'profit-pos' : gain < 0 ? 'profit-neg' : 'profit-zero';
 
   tr.innerHTML = `
-    <td><span class="id-pill">#${idx}</span></td>
+    <td><span class="id-pill">${idx}</span></td>
     <td><span class="type-badge type-multi-unit">${escHtml(p.unit.name)}</span></td>
     <td class="prod-name">${escHtml(p.productName)}</td>
     <td class="text-sm text-muted">per ${escHtml(p.unit.name)}</td>
