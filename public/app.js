@@ -21,18 +21,23 @@ indicator.textContent = '↓ Release to refresh';
 document.body.appendChild(indicator);
 
 let touchStartY = 0;
+let touchStartScrollTop = 0;
 let isPulling = false;
 const THRESHOLD = 80;
 
 document.addEventListener('touchstart', (e) => {
+  touchStartScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
   touchStartY = e.touches[0].clientY;
 }, { passive: true });
 
 document.addEventListener('touchmove', (e) => {
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-  if (scrollTop > 0) return;
+  // Only activate if the page was already at the very top when the finger landed
+  if (touchStartScrollTop > 0) return;
 
   const pullDistance = e.touches[0].clientY - touchStartY;
+
+  // Ignore upward swipes
+  if (pullDistance <= 0) return;
 
   if (pullDistance > 40) {
     indicator.classList.add('visible');
@@ -52,6 +57,7 @@ document.addEventListener('touchend', () => {
   }
 
   touchStartY = 0;
+  touchStartScrollTop = 0;
 });
 
 // ─────────────────────────────────────────────

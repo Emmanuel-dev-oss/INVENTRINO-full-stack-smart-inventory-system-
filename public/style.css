@@ -83,8 +83,8 @@ img, table {
   top: -50px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--body-bg);
-  color: white;
+  background: var(--accent);
+  color: #fff;
   padding: 8px 20px;
   border-radius: 20px;
   font-size: 13px;
