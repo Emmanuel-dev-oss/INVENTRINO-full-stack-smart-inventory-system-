@@ -78,24 +78,75 @@ img, table {
   opacity: 1;
 }
 
-.pull-indicator {
+/* ── Pull to Refresh Indicator ─────────────────────────────────── */
+#ptr-indicator {
   position: fixed;
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--accent);
-  color: #fff;
-  padding: 8px 20px;
-  border-radius: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 60px;
+
+  /* Start hidden above the viewport */
+  transform: translateY(-100%);
+  opacity: 0;
+
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  transition: top 0.2s ease;
-  z-index: 9999;
+  color: #555;
+
+  /* Smooth slide-in/out — only applied when not dragging */
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.3s ease;
+
+  will-change: transform, opacity;
   pointer-events: none;
+  user-select: none;
 }
 
-.pull-indicator.visible {
-  top: 12px;
+/* Visible state — slides fully into view */
+#ptr-indicator.ptr-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Refreshing state — stays visible while page reloads */
+#ptr-indicator.ptr-refreshing .ptr-text {
+  color: #0070f3;
+}
+
+#ptr-indicator.ptr-refreshing .ptr-spinner {
+  animation: ptr-spin 0.7s linear infinite;
+  border-color: rgba(0, 112, 243, 0.2);
+  border-top-color: #0070f3;
+}
+
+/* Spinner circle */
+.ptr-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-top-color: #555;
+
+  /* No spin by default — rotates based on pull progress via JS */
+  transition: transform 0.1s linear,
+              border-color 0.2s ease;
+  will-change: transform;
+  flex-shrink: 0;
+}
+
+@keyframes ptr-spin {
+  to { transform: rotate(360deg); }
 }
 
 /* Left Navigation */

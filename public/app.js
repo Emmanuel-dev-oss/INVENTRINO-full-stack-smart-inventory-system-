@@ -49,7 +49,7 @@ document.addEventListener('touchmove', (e) => {
 
   if (pullDistance <= 0) return;
 
-  if (pullDistance > 40) {
+  if (pullDistance > 0) {
     indicator.classList.add('visible');
     indicator.textContent = pullDistance >= THRESHOLD ? '↑ Release to refresh' : '↓ Pull to refresh';
     isPulling = pullDistance >= THRESHOLD;
