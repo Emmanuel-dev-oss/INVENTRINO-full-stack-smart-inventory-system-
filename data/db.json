@@ -1,20 +1,6 @@
 {
   "categories": [
     {
-      "id": "5a846ad7-07a5-4e07-a573-b823c3bf3460",
-      "name": "Snacks",
-      "heading": "Snacks",
-      "createdAt": "2026-04-17T11:05:38.489Z",
-      "products": []
-    },
-    {
-      "id": "93c6a66f-04d3-425b-af30-97db3f54eb6c",
-      "name": "Chemicals",
-      "heading": "Chemicals",
-      "createdAt": "2026-04-17T11:08:41.457Z",
-      "products": []
-    },
-    {
       "id": "79e5ff5a-a32b-43e5-b524-7e33e834b7f6",
       "name": "Eatery",
       "heading": "Eatery",
@@ -187,6 +173,120 @@
           "createdAt": "2026-04-18T14:53:02.614Z",
           "updatedAt": "2026-04-18T14:53:02.616Z",
           "salesHistory": []
+        }
+      ]
+    },
+    {
+      "id": "9f20f535-40b9-4fa2-8eca-f11f8624863b",
+      "name": "Goceries",
+      "heading": "Goceries",
+      "createdAt": "2026-04-20T13:56:44.358Z",
+      "products": [
+        {
+          "id": "abc67d41-4815-4ffc-8ccd-b0fd22486153",
+          "type": "single",
+          "productName": "Bread",
+          "price": 800000,
+          "quantity": 5028,
+          "eachCostPrice": 200,
+          "totalCostPrice": 1005600,
+          "eachSellingPrice": 350,
+          "totalSellingPrice": 1759800,
+          "lowStockThreshold": 1000,
+          "totalSold": 2,
+          "totalRevenue": 600,
+          "totalProfit": 200,
+          "createdAt": "2026-04-20T13:59:18.526Z",
+          "updatedAt": "2026-04-20T14:00:46.103Z",
+          "salesHistory": [
+            {
+              "id": "4d83e288-295f-452e-ae90-ad84745328b9",
+              "type": "restock",
+              "quantity": 30,
+              "note": "Added 30 unit(s) to stock",
+              "date": "2026-04-20T14:00:46.110Z"
+            },
+            {
+              "id": "1c32e4c8-fba7-49d8-b47a-16a35515ecf7",
+              "type": "edit",
+              "note": "Product details updated",
+              "date": "2026-04-20T14:00:31.780Z"
+            },
+            {
+              "id": "fe6332f1-85d1-476c-b491-6f0fecf8d93f",
+              "type": "sale",
+              "quantity": 2,
+              "priceEach": 300,
+              "revenue": 600,
+              "cost": 400,
+              "profit": 200,
+              "profitType": "profit",
+              "qtyAfter": 4998,
+              "date": "2026-04-20T13:59:55.532Z"
+            }
+          ]
+        },
+        {
+          "id": "c695da90-069d-436e-8762-bd8d4ecbe5b5",
+          "type": "multi",
+          "productName": "Busicuit",
+          "lowStockThreshold": 20,
+          "unit": {
+            "name": "carton",
+            "quantity": 20,
+            "eachCostPrice": 300,
+            "eachSellingPrice": 400,
+            "totalCostPrice": 6000,
+            "totalSellingPrice": 8000,
+            "totalSold": 3,
+            "totalRevenue": 1200,
+            "totalProfit": 300
+          },
+          "baseUnit": {
+            "name": "Sachet",
+            "conversionRate": 50,
+            "totalQuantity": 1000,
+            "costPrice": 6,
+            "sellingPrice": 8,
+            "totalSold": 100,
+            "totalRevenue": 800,
+            "totalProfit": 200
+          },
+          "totalProfit": 500,
+          "createdAt": "2026-04-20T14:04:43.139Z",
+          "updatedAt": "2026-04-20T14:06:03.623Z",
+          "salesHistory": [
+            {
+              "id": "010b3114-32b1-4bf4-bc9e-3ebfb636692f",
+              "type": "sale",
+              "sellFrom": "base",
+              "unitName": "Sachet",
+              "quantity": 100,
+              "priceEach": 8,
+              "revenue": 800,
+              "cost": 600,
+              "profit": 200,
+              "profitType": "profit",
+              "unitQtyAfter": 20,
+              "baseQtyAfter": 1000,
+              "date": "2026-04-20T14:06:03.623Z"
+            },
+            {
+              "id": "96ff3b63-d7d4-4c13-9561-22fde36934c6",
+              "type": "sale",
+              "sellFrom": "unit",
+              "unitName": "carton",
+              "quantity": 3,
+              "priceEach": 400,
+              "revenue": 1200,
+              "cost": 900,
+              "profit": 300,
+              "profitType": "profit",
+              "unitQtyAfter": 22,
+              "baseQtyAfter": 1100,
+              "date": "2026-04-20T14:05:03.900Z"
+            }
+          ]
         }
       ]
     }

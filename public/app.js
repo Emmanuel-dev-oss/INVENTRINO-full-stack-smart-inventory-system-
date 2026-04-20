@@ -49,10 +49,12 @@ function bindGlobalListeners() {
     const overlay = document.getElementById('overlay');
     const leftNav = document.getElementById('leftNavBar');
 
-    mainToggleBtn.style.display = 'block'
-    mainToggleBtnDiv.style.display = 'block'
-    overlay.classList.remove('active');
-    leftNav.classList.remove('open');
+    if (window.innerWidth <= 700) {
+      mainToggleBtn.style.display = 'block'
+      mainToggleBtnDiv.style.display = 'block'
+      overlay.classList.remove('active');
+      leftNav.classList.remove('open');
+    }
   });
 
   // Create category confirm
