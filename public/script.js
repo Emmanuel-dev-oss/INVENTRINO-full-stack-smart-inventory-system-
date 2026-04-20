@@ -34,12 +34,23 @@ function closeBigScreenNav() {
 }
 
 function closeSmallScreenNav() {
-  sidebar.classList.remove('open');
-  mainToggleBtn.style.display = 'block'
-  mainToggleBtnDiv.style.display = 'block'
-  overlay.classList.remove('active')
+  if (window.innerWidth <= 700) {
+    sidebar.classList.remove('open');
+    mainToggleBtn.style.display = 'block'
+    mainToggleBtnDiv.style.display = 'block'
+    overlay.classList.remove('active')
+  } else {
+    mainToggleBtn.style.display = 'none'
+    mainToggleBtnDiv.style.display = 'none'
+  }
 }
+// Run on load
+closeSmallScreenNav();
+// Run on resize
+window.addEventListener('resize', closeSmallScreenNav);
 
+
+// Match media to handle eventlistner
 const mediaQuery = window.matchMedia('(max-width: 700px)');
 
 
