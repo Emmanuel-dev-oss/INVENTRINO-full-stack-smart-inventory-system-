@@ -14,61 +14,21 @@ let appState = {
   stockModalData: null,  // { prod, addFrom }
 };
 
-// ── Pull to Refresh Page (with indicator) ────────────────────────────
-const indicator = document.createElement('div');
-indicator.className = 'pull-indicator';
-indicator.textContent = '↓ Pull to refresh';
-document.body.appendChild(indicator);
+// ── Pull to Refresh ──
+let startY = 0;
 
-let touchStartY = 0;
-let isPulling = false;
-let isEligible = false;
-const THRESHOLD = 80;
-
-document.addEventListener('touchstart', (e) => {
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-
-  // Only mark this gesture as eligible if the page is truly at rest at the top
-  isEligible = scrollTop === 0;
-  touchStartY = e.touches[0].clientY;
-}, { passive: true });
-
-document.addEventListener('touchmove', (e) => {
-  if (!isEligible) return;
-
-  // If at any point during the pull the page has scrollTop > 0, cancel it
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-  if (scrollTop > 0) {
-    isEligible = false;
-    isPulling = false;
-    indicator.classList.remove('visible');
-    return;
+window.addEventListener('touchstart', (e) => {
+  if (window.scrollY === 0) {
+    startY = e.touches[0].clientY;
   }
+});
 
-  const pullDistance = e.touches[0].clientY - touchStartY;
+window.addEventListener('touchend', (e) => {
+  let endY = e.changedTouches[0].clientY;
 
-  if (pullDistance <= 0) return;
-
-  if (pullDistance > 0) {
-    indicator.classList.add('visible');
-    indicator.textContent = pullDistance >= THRESHOLD ? '↑ Release to refresh' : '↓ Pull to refresh';
-    isPulling = pullDistance >= THRESHOLD;
+  if (endY - startY > 100 && window.scrollY === 0) {
+    location.reload(); // reload page
   }
-}, { passive: true });
-
-document.addEventListener('touchend', () => {
-  indicator.classList.remove('visible');
-
-  if (isPulling) {
-    isPulling = false;
-    indicator.textContent = 'Refreshing…';
-    indicator.classList.add('visible');
-    setTimeout(() => window.location.reload(), 300);
-  }
-
-  touchStartY = 0;
-  isEligible = false;
-  isPulling = false;
 });
 
 // ─────────────────────────────────────────────
@@ -266,10 +226,12 @@ function renderCategoryList(cats) {
         const overlay = document.getElementById('overlay');
         const leftNav = document.getElementById('leftNavBar');
 
-        mainToggleBtn.style.display = 'block'
-        mainToggleBtnDiv.style.display = 'block'
-        overlay.classList.remove('active');
-        leftNav.classList.remove('open');
+        if (window.innerWidth <= 700) {
+          mainToggleBtn.style.display = 'block'
+          mainToggleBtnDiv.style.display = 'block'
+          overlay.classList.remove('active');
+          leftNav.classList.remove('open');
+        }
 
       confirmDelete(cat.id, cat.name);
     });
